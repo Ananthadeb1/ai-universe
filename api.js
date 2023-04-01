@@ -22,12 +22,9 @@ newDiv.innerHTML = `
   <div class="card-body">
     <h5 class="card-title">${element.description}</h5>
     <div class="d-flex justify-content-between my-3" >
-        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[0].price? element.pricing[0].price : "free of cost"}
-         ${element.pricing[0].plan}</h6>
-        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[1].price? element.pricing[1].price : "free of cost"}
-         ${element.pricing[1].plan}</h6>
-        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[2].price? element.pricing[2].price : "free of cost"}
-         ${element.pricing[2].plan}</h6>
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[0].price} ${element.pricing[0].plan}</h6>
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[1].price} ${element.pricing[1].plan}</h6>
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[2].price} ${element.pricing[2].plan}</h6>
     </div>
     <div class= "d-flex justify-content-between">
     <div><h5 class="card-text "><small class="text-muted">Features</small></h5>
@@ -54,13 +51,13 @@ newDiv.innerHTML = `
 <div class="card w-50 m-3">
   <div class="container">
   <img class="card-img-top" src="${element.image_link[0]}"  alt="Card image cap">
-  <div class="top-right bg-danger lh-1" style="
+  <div class="top-right bg-danger" style="
         position: absolute;
         top: 8px;
         right: 16px;
         border-radius:5px;
         padding : 5px
-  "><small>${element.accuracy.score}% accuracy</small></div>
+  ">${element.accuracy.score? element.accuracy.score : "no"}% accuracy</div>
   </div>
   <div class="card-body">
     <h5 class="card-title">${element.input_output_examples[0].input}</h5>
