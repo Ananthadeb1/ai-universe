@@ -16,41 +16,75 @@ newDiv.innerHTML = `
           <div class="modal-header">
             <h5 class="modal-title"></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div A>
+          </div>
           <div class="card-deck d-flex">
-<div class="card w-50 m-3">
+<div class="card w-50 m-3 overflow-hidden">
   <div class="card-body">
     <h5 class="card-title">${element.description}</h5>
-    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <div class="d-flex justify-content-between my-3" >
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[0].price? element.pricing[0].price : "free of cost"}
+         ${element.pricing[0].plan}</h6>
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[1].price? element.pricing[1].price : "free of cost"}
+         ${element.pricing[1].plan}</h6>
+        <h6 class="rounded bg-warning  text-wrap p-1 text-wrap" style="width: 3rem;">${element.pricing[2].price? element.pricing[2].price : "free of cost"}
+         ${element.pricing[2].plan}</h6>
+    </div>
+    <div class= "d-flex justify-content-between">
+    <div><h5 class="card-text "><small class="text-muted">Features</small></h5>
+       <small>
+       <ul >
+       <li>${element.features[1].feature_name}
+       <li>${element.features[2].feature_name}
+       <li>${element.features[3].feature_name}
+     </ul>
+     </small>
+        </div>
+    <div><h5 class="card-text "><small class="text-muted">Integrations</small></h5>
+    <small>
+    <ul >
+    <li>${element.integrations[0]}
+    <li>${element.integrations[1]}
+    <li>${element.integrations[2]}
+  </ul>
+  </small>
+    </div>
+    </div>
   </div>
 </div>
 <div class="card w-50 m-3">
-  <img class="card-img-top" src="${element.image_link}" alt="Card image cap">
+  <div class="container">
+  <img class="card-img-top" src="${element.image_link[0]}"  alt="Card image cap">
+  <div class="top-right bg-danger lh-1" style="
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        border-radius:5px;
+        padding : 5px
+  "><small>${element.accuracy.score}% accuracy</small></div>
+  </div>
   <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">${element.input_output_examples[0].input}</h5>
+    <p class="card-text">${element.input_output_examples[0].output}</p>
   </div>
 </div>
 </div>
-        <A /div>
+        </div>
     </div>
 </div>`;
 document.body.append(newDiv);
 
 let modal = new bootstrap.Modal(newDiv.querySelector(".modal"));
 modal.show();
+
 }
 
 // loading the single data 
 function loadData2(id){
   console.log(id)
-  let url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  let url = `https://openapi.programming-hero.com/api/ai/tool/${id}`; 
   fetch(url)
   .then(res => res.json())
   .then(res => showDescription(res.data))
-  console.log(res)
 }
 
 // loading the main data
