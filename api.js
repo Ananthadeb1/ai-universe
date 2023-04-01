@@ -5,7 +5,7 @@
 //     .then(data => console.log(data.data.tools[0].name))
 // }
 // loadData();
-
+let data = [];
 const loadData = async () => {
   let url = "https://openapi.programming-hero.com/api/ai/tools";
   fetch(url)
@@ -13,38 +13,13 @@ const loadData = async () => {
     .then((res) => loadSingleDate(res.data.tools));
 };
 
-const detailsClicked = () => {
- 
-  let newDiv = document.createElement("div");
-  newDiv.innerHTML = `
-  <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-      </div>
-</div>`;
-document.body.append(newDiv)
 
-let modal = new bootstrap.Modal(newDiv.querySelector(".modal"));
-modal.show();
-
-  console.log("onclicked");
-};
 const parentDiv = document.getElementById("Card-parent");
 
 const loadSingleDate = (res) => {
   for (const element of res) {
+
+    data.push(element)
     console.log(element)
     let ChildDiv = document.createElement("div");
     ChildDiv.classList.add("col");
@@ -75,13 +50,48 @@ const loadSingleDate = (res) => {
           <div class=" d-flex justify-content-between">
           <small class="text-body-secondary"><i class="fa fa-calendar" aria-hidden="true"></i> ${element.published_in}
             </small>
-            <button onclick="detailsClicked()"  type="button" class="btn btn-outline-danger rounded-circle detailsBtn"><i class="fa-solid fa-arrow-right"></i></button>
+            <button onclick="detailsClicked()" id="${element.id}" type="button" class="btn btn-outline-danger rounded-circle detailsBtn"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
-            
           </div>
         </div>  `;
     parentDiv.appendChild(ChildDiv);
   }
+  
   document.getElementById("spinner").classList.add("d-none");
 };
+
+const detailsClicked = () => {
+
+
+  console.log(data[0].name)
+
+  document.querySelectorAll('button').forEach(occurence => {
+    let id = occurence.getAttribute('id');
+    occurence.addEventListener('click', function() {
+      console.log(id) 
+    } );
+  });
+ 
+  let newDiv = document.createElement("div");
+  newDiv.innerHTML = `
+  <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+          </div>
+      </div>
+</div>`;
+document.body.append(newDiv)
+
+let modal = new bootstrap.Modal(newDiv.querySelector(".modal"));
+modal.show();
+  console.log("onclick");
+};
+
 loadData();
