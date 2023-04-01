@@ -1,18 +1,67 @@
-// function loadData(){
-//     let url = 'https://openapi.programming-hero.com/api/ai/tools';
-//     fetch(url)
-//     .then(res => res.json())
-//     .then(data => console.log(data.data.tools[0].name))
-// }
-// loadData();
+//  global variable
 let data = [];
 let elementId;
-const loadData = async () => {
+
+
+
+// For showing the details modal added hear 
+const showDescription = (element) =>{
+
+console.log(element)
+let newDiv = document.createElement("div");
+newDiv.innerHTML = `
+<div class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div A>
+          <div class="card-deck d-flex">
+<div class="card w-50 m-3">
+  <div class="card-body">
+    <h5 class="card-title">${element.description}</h5>
+    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+<div class="card w-50 m-3">
+  <img class="card-img-top" src="${element.image_link}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+</div>
+        <A /div>
+    </div>
+</div>`;
+document.body.append(newDiv);
+
+let modal = new bootstrap.Modal(newDiv.querySelector(".modal"));
+modal.show();
+}
+
+// loading the single data 
+function loadData2(id){
+  console.log(id)
+  let url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  fetch(url)
+  .then(res => res.json())
+  .then(res => showDescription(res.data))
+  console.log(res)
+}
+
+// loading the main data
+const loadData = () => {
   let url = "https://openapi.programming-hero.com/api/ai/tools";
   fetch(url)
     .then((res) => res.json())
     .then((res) => loadSingleDate(res.data.tools));
 };
+
+// for set up the cards and the hendels the button clicks
 
 const parentDiv = document.getElementById("Card-parent");
 
@@ -54,40 +103,16 @@ const loadSingleDate = (res) => {
           </div>
         </div>  `;
     parentDiv.appendChild(ChildDiv);
-    // console.log(element.id);
   }
-
+// spinner added 
   document.getElementById("spinner").classList.add("d-none");
 };
 
-// console.log(data[0]);
-const detailsClicked = (element) => {
-  
-  id = parseInt(element.id)-1
-  console.log(id)
-  let newDiv = document.createElement("div");
-  newDiv.innerHTML = `
-  <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>${data[id].name}</p>
-            </div>
-          </div>
-      </div>
-</div>`;
-  document.body.append(newDiv);
-
-  let modal = new bootstrap.Modal(newDiv.querySelector(".modal"));
-  modal.show();
+// button click function for load the details 
+const detailsClicked = (btnId) => {
+  loadData2(btnId.id)
 };
 
-const getId = (btn) => {
-  console.log(parseInt(btn.id));
-};
 
+// call the loadData method for loading all the data automatically 
 loadData();
